@@ -21,7 +21,7 @@ const port = process.env.PORT || 5000;
 
 // just test for call logs data
 const accountSid = 'AC9190dc423fd5c18383777fa9525652b6';
-const authToken = '016ff19ea68a577ac4467ce70fd6d7db';
+const authToken = '4cd56977a64a30e4b297f9944c72f589';
 const client = twilio(accountSid, authToken);
 
 
