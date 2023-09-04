@@ -29,7 +29,7 @@ app.get('/get-all-logs', async (req, res)=>{
   try {
     const callLogs = await client.calls.list(); // Fetch call logs from Twilio
 
-    res.json({ callLogs });
+    res.send( callLogs );
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while fetching call logs' });
@@ -48,7 +48,7 @@ app.get('/get-call-recording', async (req, res) => {
     });
 
 
-    res.json({recordingUrls})
+    res.send(recordingUrls)
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while fetching call recordings' });
