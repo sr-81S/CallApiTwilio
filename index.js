@@ -3,6 +3,7 @@ const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const twilio = require('twilio');
+const cors = require('cors');
 
 const router = require("./src/router");
 
@@ -11,6 +12,7 @@ const app = express();
 app.use(express.static(path.join(__dirname, "public")));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(cors())
 
 app.use(router);
 
@@ -28,8 +30,7 @@ const client = twilio(accountSid, authToken);
 app.get('/get-all-logs', async (req, res)=>{
   try {
     const callLogs = await client.calls.list(); // Fetch call logs from Twilio
-
-    res.send( callLogs );
+    res.json( callLogs );
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while fetching call logs' });
@@ -48,7 +49,7 @@ app.get('/get-call-recording', async (req, res) => {
     });
 
 
-    res.send(recordingUrls)
+    res.json(recordingUrls)
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred while fetching call recordings' });
