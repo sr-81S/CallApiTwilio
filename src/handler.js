@@ -8,7 +8,7 @@ const config = require("../config");
 var identity;
 
 exports.tokenGenerator = function tokenGenerator() {
-  identity = 'saroz savar';
+  identity = nameGenerator();
 
   const accessToken = new AccessToken(
     config.accountSid,
