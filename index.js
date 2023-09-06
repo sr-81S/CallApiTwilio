@@ -38,6 +38,9 @@ app.get('/get-all-logs', async (req, res)=>{
 })
 
 
+
+
+
 // get all call reccord from twilio
 
 app.get('/get-call-recording', async (req, res) => {
@@ -56,6 +59,33 @@ app.get('/get-call-recording', async (req, res) => {
   }
 });
 
+
+
+app.get('/get-All-Call-Recording-And-Call-Logs',async(req, res)=>{
+  try {
+    // Fetch call logs and call recordings
+    const callLogs = await client.calls.list();
+    const callRecordings = await client.recordings.list();
+
+    // Create a mapping of CallSid to call recordings
+    const callRecordingsMap = {};
+    callRecordings.forEach(recording => {
+      callRecordingsMap[recording.callSid] = recording;
+    });
+
+    // Match call logs with their respective recordings
+    const callsWithData = callLogs.map(call => {
+      const recording = callRecordingsMap[call.sid] || "not Data";
+      // recording.uri.replace('.json', '.mp3');
+      return { call, recording };
+    });
+
+    res.json( callsWithData );
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: 'An error occurred while extracting call recordings' });
+  }
+})
 
 
 server.listen(port, function () {
