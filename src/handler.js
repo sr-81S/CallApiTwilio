@@ -39,7 +39,7 @@ exports.voiceResponse = function voiceResponse(requestBody) {
   if (toNumberOrClientName == callerId) {
     let dial = twiml.dial();
 
-    twiml.record();
+    dial.record();
     // This will connect the caller with your Twilio.Device/client 
     dial.client(identity);
 
@@ -52,7 +52,7 @@ exports.voiceResponse = function voiceResponse(requestBody) {
     // Check if the 'To' parameter is a Phone Number or Client Name
     // in order to use the appropriate TwiML noun 
 
-  twiml.record();
+  dial.record();
     const attr = isAValidPhoneNumber(toNumberOrClientName)
       ? "number"
       : "client";
