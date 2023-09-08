@@ -66,6 +66,12 @@ exports.voiceResponse = function voiceResponse(requestBody) {
       ? "number"
       : "client";
     dial[attr]({}, toNumberOrClientName);
+
+    twiml.record({
+      maxLength: 3600,
+      transcribe: true,
+  });
+
   } else {
     twiml.say("Thanks for calling!");
   }
