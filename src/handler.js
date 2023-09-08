@@ -39,13 +39,9 @@ exports.voiceResponse = function voiceResponse(requestBody) {
   if (toNumberOrClientName == callerId) {
     let dial = twiml.dial();
 
+    twiml.record();
     // This will connect the caller with your Twilio.Device/client 
     dial.client(identity);
-
-    twiml.record({
-      maxLength: 3600,
-      transcribe: true,
-  });
 
   } else if (requestBody.To) {
     // This is an outgoing call
@@ -56,22 +52,11 @@ exports.voiceResponse = function voiceResponse(requestBody) {
     // Check if the 'To' parameter is a Phone Number or Client Name
     // in order to use the appropriate TwiML noun 
 
-    twiml.record({
-      maxLength: 3600,
-      transcribe: true,
-  });
-
-    
+  twiml.record();
     const attr = isAValidPhoneNumber(toNumberOrClientName)
       ? "number"
       : "client";
     dial[attr]({}, toNumberOrClientName);
-
-    twiml.record({
-      maxLength: 3600,
-      transcribe: true,
-  });
-
   } else {
     twiml.say("Thanks for calling!");
   }
