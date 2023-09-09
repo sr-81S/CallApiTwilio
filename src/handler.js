@@ -33,11 +33,10 @@ exports.voiceResponse = function voiceResponse(requestBody) {
   const toNumberOrClientName = requestBody.To;
   const callerId = config.callerId;
   let twiml = new VoiceResponse();
-
   // If the request to the /voice endpoint is TO your Twilio Number, 
   // then it is an incoming call towards your Twilio.Device.
   if (toNumberOrClientName == callerId) {
-    let dial = twiml.dial();
+    let dial = twiml.dial({record: 'record-from-answer-dual'});
 
     // dial.record();
     // This will connect the caller with your Twilio.Device/client 
@@ -47,12 +46,13 @@ exports.voiceResponse = function voiceResponse(requestBody) {
     // This is an outgoing call
 
     // set the callerId
-    let dial = twiml.dial({ callerId });
+    let dial = twiml.dial({record: 'record-from-answer-dual', callerId });
 
     // Check if the 'To' parameter is a Phone Number or Client Name
     // in order to use the appropriate TwiML noun 
 
   // dial.record();
+  
     const attr = isAValidPhoneNumber(toNumberOrClientName)
       ? "number"
       : "client";
