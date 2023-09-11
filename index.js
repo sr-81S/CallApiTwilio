@@ -75,7 +75,7 @@ app.get('/get-All-Call-Recording-And-Call-Logs',async(req, res)=>{
 
     // Match call logs with their respective recordings
     const callsWithData = callLogs.map(call => {
-      const recording = callRecordingsMap[call.sid] || "not Data";
+      const recording = callRecordingsMap[call.parentCallSid] || "not Data";
       // recording.uri.replace('.json', '.mp3');
       return { call, recording };
     });
